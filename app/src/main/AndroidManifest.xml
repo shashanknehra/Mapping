@@ -30,6 +30,9 @@
         <activity android:name=".PrefActivity" android:label="@string/preferences">
 
         </activity>
+        <activity android:name=".MapChooseListActivity" android:label="@string/choosemap">
+
+        </activity>
     </application>
 
 </manifest>

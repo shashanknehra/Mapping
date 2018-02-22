@@ -2,7 +2,6 @@ package com.example.a2nehrs61.mapping;
 
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
-import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -78,7 +77,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(item.getItemId() == R.id.preferences)
         {
             Intent intent = new Intent(this,PrefActivity.class);
-            startActivityForResult(intent,0);
+            startActivityForResult(intent,1);
+            return true;
+        }
+        else if(item.getItemId() == R.id.list)
+        {
+            Intent intent = new Intent(this,MapChooseListActivity.class);
+            startActivityForResult(intent,2);
             return true;
         }
         return false;
@@ -111,6 +116,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
 
         if(requestCode==0)
+        {
+
+            if (resultCode==RESULT_OK)
+            {
+                Bundle extras=intent.getExtras();
+                boolean hikebikemap = extras.getBoolean("com.example.hikebikemap");
+                if(hikebikemap==true)
+                {
+                    mv.setTileSource(TileSourceFactory.HIKEBIKEMAP);
+                }
+                else
+                {
+                    mv.setTileSource(TileSourceFactory.MAPNIK);
+                }
+            }
+        }
+        if(requestCode==2)
         {
 
             if (resultCode==RESULT_OK)
