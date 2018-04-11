@@ -1,7 +1,11 @@
 package com.example.a2nehrs61.mapping;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -20,7 +25,7 @@ import org.osmdroid.views.MapView;
 
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,LocationListener {
 
     MapView mv;
     double lastLat, lastLon;
@@ -39,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mv = (MapView)findViewById(R.id.map1);
         mv.setBuiltInZoomControls(true);
+
+        LocationManager mgr=(LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
     }
     public void onStart()
     {
@@ -152,4 +160,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @Override
+    public void onLocationChanged(Location location) {
+        //Toast.makeText(this, "Location=" + location.getLatitude()+ " " + location.getLongitude() , Toast.LENGTH_LONG).show();
+        mv.getController().setZoom(12);
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+        mv.getController().setCenter(new GeoPoint(latitude,longitude));
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
 }
