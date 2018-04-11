@@ -171,16 +171,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
+        Toast.makeText(this, "Status changed: " + s, Toast.LENGTH_LONG).show();
 
     }
 
     @Override
     public void onProviderDisabled(String s) {
+        Toast.makeText(this, "Provider " + s + " disabled", Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void onProviderEnabled(String s) {
+        Toast.makeText(this, "Provider " + s + " enabled", Toast.LENGTH_LONG).show();
     }
 }
